@@ -1,6 +1,10 @@
 // Single source of truth for OMIC's programme, taken from omic.spot (Oct 2026).
 // Dates use UAE time (UTC+4).
 
+/** the site can live at the root or in a sub-folder (GitHub Pages); url() adds that folder */
+export const BASE = (import.meta.env && import.meta.env.BASE_URL) || '/';
+export const url = (p) => (typeof p === 'string' && p.startsWith('/') && !p.startsWith('//') ? BASE.replace(/\/$/, '') + p : p);
+
 export const VENUE = {
   name: 'OMIC Cultural Hub',
   line1: 'Warehouse 110',
@@ -20,8 +24,8 @@ export const EVENTS = [
     start: '2026-09-24T00:00:00+04:00',
     end: '2026-10-20T23:59:00+04:00',
     when: 'Submissions close 20 Oct 2026',
-    href: '/events/art-prize.html',
-    poster: '/assets/posters/art-prize.jpg',
+    href: url('/events/art-prize.html'),
+    poster: url('/assets/posters/art-prize.jpg'),
     ratio: '2000/1325',
   },
   {
@@ -34,8 +38,8 @@ export const EVENTS = [
     start: '2026-10-10T18:00:00+04:00',
     end: '2026-10-10T21:00:00+04:00',
     when: 'Sat 10 Oct · 6:00 PM',
-    href: '/events/newton.html',
-    poster: '/assets/posters/newton.jpg',
+    href: url('/events/newton.html'),
+    poster: url('/assets/posters/newton.jpg'),
     ratio: '1000/1250',
     full: true,
   },
@@ -49,8 +53,8 @@ export const EVENTS = [
     start: '2026-09-18T00:00:00+04:00',
     end: '2026-10-19T23:59:00+04:00',
     when: '18 Sep – 19 Oct',
-    href: '/events/nothing-unusual.html',
-    poster: '/assets/posters/nothing-unusual.jpg',
+    href: url('/events/nothing-unusual.html'),
+    poster: url('/assets/posters/nothing-unusual.jpg'),
     ratio: '1080/1350',
   },
   {
@@ -63,8 +67,8 @@ export const EVENTS = [
     start: '2026-09-26T17:00:00+04:00',
     end: '2026-09-26T19:00:00+04:00',
     when: 'Sat 26 Sep · 5:00–7:00 PM',
-    href: '/events/afterimage.html',
-    poster: '/assets/posters/afterimage.jpg',
+    href: url('/events/afterimage.html'),
+    poster: url('/assets/posters/afterimage.jpg'),
     ratio: '2160/2700',
   },
 ];
@@ -86,14 +90,14 @@ export const STATUS_LABEL = {
 };
 
 export const MENU = [
-  { name: 'Cappuccino', group: 'Coffee', img: '/assets/menu/menu-01.jpg' },
-  { name: 'Strawberry Matcha', group: 'Cold drinks', img: '/assets/menu/menu-02.jpg' },
-  { name: 'Tiramisu', group: 'Desserts', img: '/assets/menu/menu-03.jpg' },
-  { name: 'Pain au Chocolat', group: 'Pastries', img: '/assets/menu/menu-04.jpg' },
-  { name: 'San Sebastian Cheesecake', group: 'Desserts', img: '/assets/menu/menu-05.jpg' },
-  { name: 'Americano (Hot / Iced)', group: 'Coffee', img: '/assets/menu/menu-06.jpg' },
-  { name: 'Croissant & Coffee', group: 'Combos', img: '/assets/menu/menu-07.jpg' },
-  { name: 'Sandwich & Coffee', group: 'Combos', img: '/assets/menu/menu-08.jpg', note: '9 AM – 12 PM' },
-  { name: 'Popcorn & Coke', group: 'Cinema snacks', img: '/assets/menu/menu-09.jpg', note: 'From 12 PM' },
-  { name: 'Coke & Sandwich', group: 'Combos', img: '/assets/menu/menu-10.jpg', note: 'From 12 PM' },
+  { name: 'Cappuccino', group: 'Coffee', img: url('/assets/menu/menu-01.jpg') },
+  { name: 'Strawberry Matcha', group: 'Cold drinks', img: url('/assets/menu/menu-02.jpg') },
+  { name: 'Tiramisu', group: 'Desserts', img: url('/assets/menu/menu-03.jpg') },
+  { name: 'Pain au Chocolat', group: 'Pastries', img: url('/assets/menu/menu-04.jpg') },
+  { name: 'San Sebastian Cheesecake', group: 'Desserts', img: url('/assets/menu/menu-05.jpg') },
+  { name: 'Americano (Hot / Iced)', group: 'Coffee', img: url('/assets/menu/menu-06.jpg') },
+  { name: 'Croissant & Coffee', group: 'Combos', img: url('/assets/menu/menu-07.jpg') },
+  { name: 'Sandwich & Coffee', group: 'Combos', img: url('/assets/menu/menu-08.jpg'), note: '9 AM – 12 PM' },
+  { name: 'Popcorn & Coke', group: 'Cinema snacks', img: url('/assets/menu/menu-09.jpg'), note: 'From 12 PM' },
+  { name: 'Coke & Sandwich', group: 'Combos', img: url('/assets/menu/menu-10.jpg'), note: 'From 12 PM' },
 ];

@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import Lenis from 'lenis';
-import { EVENTS, statusOf, STATUS_LABEL, VENUE } from './data.js';
+import { EVENTS, statusOf, STATUS_LABEL, VENUE, url } from './data.js';
 import { InkField } from './ink.js';
 import { brushCursor } from './lib/cursor.js';
 import { filmLeader } from './lib/leader.js';
@@ -45,11 +45,11 @@ function smooth() {
 
 /* ================================================================== header */
 const NAV = [
-  { href: '/', label: 'Home', key: 'home' },
-  { href: '/programme.html', label: 'Programme', key: 'programme' },
-  { href: '/events/newton.html', label: 'Cinema', key: 'cinema' },
-  { href: '/cafe.html', label: 'Cafe', key: 'cafe' },
-  { href: '/visit.html', label: 'Visit', key: 'visit' },
+  { href: url('/'), label: 'Home', key: 'home' },
+  { href: url('/programme.html'), label: 'Programme', key: 'programme' },
+  { href: url('/events/newton.html'), label: 'Cinema', key: 'cinema' },
+  { href: url('/cafe.html'), label: 'Cafe', key: 'cafe' },
+  { href: url('/visit.html'), label: 'Visit', key: 'visit' },
 ];
 
 export function rollHTML(text) {
@@ -70,7 +70,7 @@ function buildHeader() {
   const header = document.createElement('header');
   header.className = 'site-header';
   header.innerHTML = `
-    <a class="logo" href="/" aria-label="OMIC Cultural Hub, home">
+    <a class="logo" href="${url('/')}" aria-label="OMIC Cultural Hub, home">
       <span class="c">O</span><span class="c">M</span><span class="c">I</span><span class="c">C</span>
       <span class="suffix" aria-hidden="true"><span>ulture</span><span>inema</span><span>afe</span><span>ulture</span></span>
     </a>
@@ -78,7 +78,7 @@ function buildHeader() {
       ${NAV.map((n) => `<li><a href="${n.href}" data-nav="${n.key}">${rollHTML(n.label)}</a></li>`).join('')}
     </ul></nav>
     <div class="header-right">
-      <a class="now-pill" href="/programme.html"><span class="pulse"></span><span>${nowLine()}</span></a>
+      <a class="now-pill" href="${url('/programme.html')}"><span class="pulse"></span><span>${nowLine()}</span></a>
       <button class="sound-btn" aria-pressed="false" aria-label="Toggle sound" data-cursor="Sound"><i></i><i></i><i></i><i></i></button>
       <button class="menu-btn" aria-expanded="false" aria-controls="menu-panel" aria-label="Open menu"><i></i></button>
     </div>`;

@@ -5,7 +5,7 @@ import { InkFluid } from './lib/fluid.js';
 import { Corridor } from './lib/corridor.js';
 import { SharedGround } from './lib/shared-ground.js';
 import { InkField } from './ink.js';
-import { EVENTS, MENU, statusOf } from './data.js';
+import { EVENTS, MENU, statusOf, url } from './data.js';
 import { trailerModal } from './trailer.js';
 import { map } from './map.js';
 
@@ -108,7 +108,7 @@ function ticker() {
       : s === 'open' ? '<span class="tag open">Open call</span>'
       : s === 'completed' ? '<span class="tag">Archive</span>' : '<span class="tag">Upcoming</span>';
     return `<a class="ticker-item" href="${e.href}">${tag}<b>${e.title}</b><span class="when">${e.when}</span></a><span class="ticker-item" aria-hidden="true"><span class="ticker-star"></span></span>`;
-  }).join('') + '<a class="ticker-item" href="/cafe.html"><span class="tag">OMICafe</span><b>Coffee, pastries &amp; all-day plates</b></a><span class="ticker-item" aria-hidden="true"><span class="ticker-star"></span></span>';
+  }).join('') + '<a class="ticker-item" href="' + url('/cafe.html') + '"><span class="tag">OMICafe</span><b>Coffee, pastries &amp; all-day plates</b></a><span class="ticker-item" aria-hidden="true"><span class="ticker-star"></span></span>';
   track.innerHTML = `<div class="marquee-half">${items}</div><div class="marquee-half" aria-hidden="true">${items}</div>`;
   $$('[aria-hidden="true"] a', track).forEach((a) => a.setAttribute('tabindex', '-1'));
 }
@@ -281,7 +281,7 @@ function menuRail() {
   const rail = $('[data-menu-rail]');
   if (!rail) return;
   rail.innerHTML = MENU.map((m) => `
-    <a class="menu-card" href="/cafe.html">
+    <a class="menu-card" href="${url('/cafe.html')}">
       <img src="${m.img}" alt="${m.name}" loading="lazy" width="720" height="1280">
       <span class="label">${m.name}${m.note ? `<small>${m.note}</small>` : ''}</span>
     </a>`).join('');
