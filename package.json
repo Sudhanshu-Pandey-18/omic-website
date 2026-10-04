@@ -1,0 +1,24 @@
+{
+  "name": "omic-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "OMIC Cultural Hub — Culture · Cinema · Cafe. Warehouse 110, Goshi Warehouse City, Al Quoz, Dubai.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview",
+    "fetch-assets": "bash scripts/fetch-assets.sh"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/oswald": "^5.3.0",
+    "@fontsource/outfit": "^5.3.0",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26",
+    "three": "^0.186.1"
+  }
+}

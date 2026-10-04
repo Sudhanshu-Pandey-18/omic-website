@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMIC Cultural Hub — Culture · Cinema · Cafe in Al Quoz, Dubai</title>
+  <meta name="description" content="OMIC is a cultural hub in Goshi Warehouse City, Al Quoz, Dubai, where cinema, theatre, art and culture come together — exhibitions, screenings, talks and OMICafe under one roof.">
+  <meta name="theme-color" content="#f4ede1">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="OMIC Cultural Hub — Where art finds its home">
+  <meta property="og:description" content="Culture · Cinema · Cafe at Warehouse 110, Goshi Warehouse City, Al Quoz, Dubai.">
+  <meta property="og:image" content="/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/oswald-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/src/css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ArtsVenue",
+    "name": "OMIC Cultural Hub",
+    "description": "A space where cinema, theatre, art, and culture come together.",
+    "address": { "@type": "PostalAddress", "streetAddress": "Warehouse 110, Goshi Warehouse City", "addressLocality": "Al Quoz, Dubai", "addressCountry": "AE" },
+    "url": "https://omic.spot/"
+  }
+  </script>
+</head>
+<body data-page="home">
+
+  <!-- ============ FILM LEADER INTRO (first visit) ============ -->
+  <div class="leader" role="dialog" aria-label="Welcome to OMIC">
+    <canvas aria-hidden="true"></canvas>
+    <div class="leader-ui">
+      <p class="leader-tag">OMIC Cultural Hub presents</p>
+      <div class="leader-actions">
+        <button class="btn light" data-enter="sound"><span class="dot"></span>Enter with sound</button>
+        <button class="quiet" data-enter="quiet">Enter quietly</button>
+      </div>
+    </div>
+    <button class="leader-skip" data-skip>Skip intro</button>
+  </div>
+
+  <main id="main">
+    <!-- ============ 1 · DUSK — LIVING INK ============ -->
+    <section class="hero" data-hour="dusk" aria-labelledby="hero-title">
+      <div class="hero-paint" data-hero-paint data-paint data-no-trail data-cursor="Paint"></div>
+      <div class="hero-top wrap">
+        <span class="kicker">Culture · Cinema · Cafe</span>
+        <span class="kicker no-dot hero-where">Warehouse 110 — Al Quoz, Dubai</span>
+      </div>
+      <div class="hero-title wrap">
+        <h1 id="hero-title" class="display hero-h1" data-hero-title>Where art finds <br>its <span class="serif">home</span></h1>
+        <div class="hero-meta">
+          <p class="hero-lead">A space where cinema, theatre, art, and culture come together. <span class="paint-hint">This page is wet ink — <b>move to paint</b>, <b>click to drop colour</b>, then let go and watch the logo heal.</span></p>
+          <a class="next-card" href="/events/newton.html" data-cursor="View">
+            <img src="/assets/posters/newton.jpg" alt="" width="52" height="52">
+            <span><small>Next on screen</small><strong>Newton · Sat 10 Oct</strong></span>
+          </a>
+        </div>
+      </div>
+      <a class="spin-badge" href="#manifesto" aria-label="Scroll down" data-cursor="Begin">
+        <svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="badge-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+          <text><textPath href="#badge-circle">OMIC · CULTURE · CINEMA · CAFE · OMIC · CULTURE · CINEMA · CAFE ·</textPath></text></svg>
+        <span class="spin-core" aria-hidden="true">↓</span>
+      </a>
+    </section>
+
+    <!-- ============ LIVE MARQUEE ============ -->
+    <div class="marquee" data-marquee data-speed="46" aria-label="What's on now"><div class="marquee-track" data-ticker></div></div>
+
+    <!-- ============ 2 · TWILIGHT — MANIFESTO ============ -->
+    <section class="manifesto" id="manifesto" data-hour="twilight" data-manifesto aria-label="About OMIC">
+      <div class="manifesto-pin">
+        <span class="kicker manifesto-kicker">The idea, in one sentence</span>
+        <p class="manifesto-text" data-manifesto-text>A space where <span class="key k-cinema" data-annotate="circle" data-annotate-start="top 45%">cinema,</span> <span class="key k-theatre" data-annotate="box" data-annotate-start="top 45%" data-delay=".25">theatre,</span> <span class="key k-art" data-annotate="underline" data-annotate-start="top 45%" data-delay=".5">art,</span> and <span class="key k-culture" data-annotate="scribble" data-annotate-start="top 45%" data-delay=".75">culture</span> come together.</p>
+        <div class="manifesto-foot">
+          <span class="pill"><span class="c" style="background:var(--lavender)"></span>Culture</span>
+          <span class="pill"><span class="c" style="background:var(--blue)"></span>Cinema</span>
+          <span class="pill"><span class="c" style="background:var(--orange)"></span>Cafe</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · NIGHT — THE WAREHOUSE (3D) ============ -->
+    <section class="corridor" data-hour="night" data-corridor aria-labelledby="corridor-title">
+      <div class="corridor-pin">
+        <div class="corridor-stage" data-corridor-stage data-no-trail></div>
+        <div class="corridor-intro wrap" data-corridor-intro>
+          <span class="kicker">The programme, after dark</span>
+          <h2 id="corridor-title" class="display h-xl">Walk the <span class="serif">warehouse</span></h2>
+          <p class="lead">Scroll to walk. Every frame on the wall is something happening at OMIC — click one to step inside.</p>
+        </div>
+        <div class="corridor-hud wrap" aria-hidden="true">
+          <span class="hud-count"><b data-room>01</b> / <span data-rooms>04</span></span>
+          <span class="hud-bar"><i data-hud-bar></i></span>
+          <span>Warehouse 110</span>
+        </div>
+        <a class="btn light corridor-end" href="/programme.html" data-corridor-end data-magnetic>See the full programme →</a>
+        <noscript><p class="wrap">See <a href="/programme.html">the programme</a>.</p></noscript>
+      </div>
+    </section>
+
+    <!-- ============ 4 · NIGHT — THREE ROOMS (torchlight) ============ -->
+    <section class="rooms" data-hour="night" data-rooms-sec aria-labelledby="rooms-title" data-no-trail>
+      <div class="wrap rooms-head">
+        <span class="kicker">One roof, three doors</span>
+        <h2 id="rooms-title" class="display h-lg" data-split>Bring a <span class="serif">torch</span></h2>
+        <p class="lead">The lights are off. Move around to see what's in each room.</p>
+      </div>
+      <a class="room" href="/programme.html?f=culture" data-cursor="Enter">
+        <div class="room-img"><img src="/assets/posters/nothing-unusual.jpg" alt="" loading="lazy"></div>
+        <span class="room-num">01</span>
+        <span class="room-word"><span class="o">C</span>ulture</span>
+        <span class="room-info">Exhibitions, the OMIC Art Prize and talks with the artists shaping the UAE's scene.</span>
+      </a>
+      <a class="room" href="/events/newton.html" data-cursor="Enter">
+        <div class="room-img"><img src="/assets/posters/newton.jpg" alt="" loading="lazy"></div>
+        <span class="room-num">02</span>
+        <span class="room-word"><span class="o">C</span>inema</span>
+        <span class="room-info">A 50-seat sound sanctuary. German sound technology, honest materials, open acoustics.</span>
+      </a>
+      <a class="room" href="/cafe.html" data-cursor="Enter">
+        <div class="room-img"><img src="/assets/img/cafe-interior.jpg" alt="" loading="lazy"></div>
+        <span class="room-num">03</span>
+        <span class="room-word"><span class="o">C</span>afe</span>
+        <span class="room-info">Good coffee, thoughtful food, and a space designed specifically for slowing down.</span>
+      </a>
+    </section>
+
+    <!-- ============ 5 · NIGHT — CINEMA ============ -->
+    <section class="cinema2" data-hour="night" data-cinema aria-labelledby="cinema-title">
+      <div class="cinema-pin">
+        <div class="letterbox top" data-lb></div><div class="letterbox bottom" data-lb></div>
+        <div class="projector-beam" aria-hidden="true"></div>
+        <div class="cinema-screen" data-tilt data-cursor="Trailer" data-trailer="yU6zMPFd4UU">
+          <div class="card"><img src="/assets/posters/newton.jpg" alt="Newton film poster, presented by OMICinema" width="1000" height="1250"><div class="glare"></div><div class="flicker"></div></div>
+        </div>
+        <div class="cinema-copy">
+          <span class="kicker">OMICinema presents · Screening + Q&amp;A</span>
+          <h2 id="cinema-title" class="display cinema-title">Newton</h2>
+          <p class="lead">A rookie clerk runs an election in a conflict-ridden jungle of Central India. India's official entry to the 90th Academy Awards.</p>
+          <div class="leader-date" aria-label="Saturday 10 October, 6 PM">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="38"/><path d="M50 0V100M0 50H100"/><path class="sweep" d="M50 50 L50 4 A46 46 0 0 1 96 50 Z"/></svg>
+            <span><b>10</b> Oct · 6 PM</span>
+          </div>
+          <div class="credits-roll" aria-label="Credits">
+            <div class="credits-track" data-credits>
+              <p><small>Directed by</small>Amit V. Masurkar</p>
+              <p><small>Produced by</small>Manish Mundra</p>
+              <p><small>Starring</small>Rajkummar Rao · Anjali Patil · Pankaj Tripathi · Raghubir Yadav</p>
+              <p><small>World premiere</small>Berlinale Forum 2017 — CICAE Art Cinema Award</p>
+              <p><small>Also</small>HKIFF 2017 Jury Prize · Tribeca 2017 · Asian Film Awards 2018</p>
+              <p><small>Q&amp;A at 7:45 PM</small>Amit Masurkar · Pankaj Tripathi · Manish Mundra · moderated by Rashmi Devi</p>
+            </div>
+          </div>
+          <div class="theatre" aria-hidden="true"><svg viewBox="0 0 400 140" data-theatre></svg></div>
+          <p class="seat-note"><strong>House full.</strong> All 50 seats and the waitlist are taken.</p>
+          <div class="cta-row">
+            <button class="btn light" data-trailer-btn="yU6zMPFd4UU" data-magnetic>▶ Watch trailer</button>
+            <a class="btn ghost" href="/events/newton.html">Film details</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6 · EMBER — INTERMISSION (latte) ============ -->
+    <section class="intermission" data-hour="ember" aria-labelledby="cafe-title">
+      <div class="wrap intermission-grid">
+        <div>
+          <span class="kicker">Intermission · OMICafe</span>
+          <h2 id="cafe-title" class="display h-lg" data-split>A place that has <span class="serif">good taste</span></h2>
+          <p class="lead">Coffee, pastries, and all-day plates. Pull up a seat before a panel, between gallery visits, or any time in between.</p>
+          <a class="btn" href="/cafe.html" data-magnetic>See the menu</a>
+        </div>
+        <div class="latte" data-latte data-paint data-no-trail data-cursor="Stir"><span class="latte-hint">stir me</span></div>
+      </div>
+      <div class="wrap"><div class="rail" data-cursor="Drag" data-menu-rail></div></div>
+    </section>
+
+    <!-- ============ 7 · DAWN — SHARED GROUND ============ -->
+    <section class="ground" data-hour="dawn" aria-labelledby="prize-title">
+      <div class="ground-art">
+      <div class="ground-paint" data-ground></div>
+      <div class="wrap ground-copy">
+        <span class="kicker">OMIC Art Prize 2026 · Open call</span>
+        <h2 id="prize-title" class="display ground-title"><span>Shared</span> <span class="serif">Ground</span></h2>
+        <p class="lead">What do we bring to the place we call home — and what do we take from it? This painting is made of hundreds of strokes arriving from everywhere and settling into one horizon. Click it to paint a new one.</p>
+        <div class="ground-row">
+          <div class="prize-amount display"><small>AED</small><span data-count="15000">15,000</span></div>
+          <div class="countdown flip" data-countdown="2026-10-20T23:59:00+04:00" aria-label="Time left to submit">
+            <div><b data-d data-flip>00</b><span>Days</span></div><div><b data-h data-flip>00</b><span>Hours</span></div><div><b data-m data-flip>00</b><span>Min</span></div><div><b data-s data-flip>00</b><span>Sec</span></div>
+          </div>
+        </div>
+        <div class="prize-split">
+          <div><b>AED 10,000</b><span>1st prize + OMIC Art Emblem</span></div>
+          <div><b>AED 3,000</b><span>2nd prize</span></div>
+          <div><b>AED 2,000</b><span>3rd prize</span></div>
+        </div>
+        <a class="btn" href="/events/art-prize.html" data-magnetic><span class="dot"></span>Submit your work — closes 20 Oct</a>
+      </div>
+      </div>
+      <div class="wrap">
+        <h3 class="display h-sm jury-title">The jury</h3>
+        <div class="rail" data-cursor="Drag">
+          <article class="person"><div class="ph" data-brush><img src="/assets/artists/patricia-millns.jpg" alt="Patricia Millns" loading="lazy"></div><div class="role">British artist</div><h4>Patricia Millns FRSA</h4><p>Artist, arts advisor and mentor based in the Middle East for over 38 years.</p></article>
+          <article class="person"><div class="ph" data-brush><img src="/assets/artists/jalal-luqman.jpg" alt="Jalal Luqman" loading="lazy"></div><div class="role">Emirati artist</div><h4>Jalal Luqman</h4><p>Multidisciplinary artist and author who introduced digital art to the UAE in 1996.</p></article>
+          <article class="person"><div class="ph" data-brush><img src="/assets/artists/manish-mundra.jpg" alt="Manish Mundra" loading="lazy"></div><div class="role">Founder, OMIC</div><h4>Manish Mundra</h4><p>Artist, filmmaker and producer of award-winning films including Newton.</p></article>
+          <article class="person"><div class="ph" data-brush><img src="/assets/artists/khalil-abdulwahid.jpg" alt="Khalil Abdulwahid" loading="lazy"></div><div class="role">Emirati artist</div><h4>Khalil Abdulwahid</h4><p>Painting, video art and mixed media; trained under the late Hassan Sharif.</p></article>
+          <article class="person"><div class="ph" data-brush><img src="/assets/artists/robin-corcos.jpg" alt="Robin Corcos" loading="lazy"></div><div class="role">Gallerist</div><h4>Robin Corcos</h4><p>Co-founder of Hestia Gallery in Dubai, with 15+ years in European art and design.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 8 · DAY — FOUNDER ============ -->
+    <section class="founder" data-hour="day" aria-labelledby="founder-title">
+      <div class="wrap founder-grid">
+        <div class="founder-photo" data-brush><img src="/assets/artists/manish-mundra.jpg" alt="Manish Mundra, founder of OMIC" loading="lazy"></div>
+        <div>
+          <span class="kicker" id="founder-title">Founded by Manish Mundra</span>
+          <p class="founder-statement">A <span data-annotate="underline">filmmaker</span> who produced <em>Newton</em>, a painter, a photographer and a poet — building a home where all of those things can live in <span data-annotate="circle" data-delay=".4">the same room</span>.</p>
+          <div class="founder-facts">
+            <span class="laurel">Producer, Drishyam Films</span>
+            <span class="laurel">Artist in Nothing Unusual</span>
+            <span class="laurel">Art Prize juror</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9 · NIGHT — VISIT ============ -->
+    <section class="visit" data-hour="night" aria-labelledby="visit-title">
+      <div class="wrap">
+        <div class="visit-card" data-reveal>
+          <div class="visit-map" data-map></div>
+          <div class="visit-info">
+            <div>
+              <span class="kicker" id="visit-title">Find us tonight</span>
+              <address>Warehouse 110<br>Goshi Warehouse City<br><span class="serif" style="color:var(--lavender)">Al Quoz, Dubai</span></address>
+            </div>
+            <div class="amen"><span>Paid parking</span><span>Restrooms</span><span>Cafe</span><span>Internet</span></div>
+            <div class="cta-row">
+              <a class="btn light" href="https://maps.app.goo.gl/UWvTuSzfT7zGVK7BA?g_st=ic" target="_blank" rel="noopener" data-magnetic>Get directions ↗</a>
+              <a class="btn ghost" href="/visit.html">Plan your visit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/js/app.js"></script>
+</body>
+</html>
