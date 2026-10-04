@@ -2,6 +2,8 @@
 
 **Culture · Cinema · Cafe** — Warehouse 110, Goshi Warehouse City, Al Quoz, Dubai.
 
+**Live:** https://sudhanshu-pandey-18.github.io/omic-website/
+
 The site is an evening at OMIC. Its colours move from **dusk → twilight → night → ember → dawn → day**
 as you scroll, and every section is a small artwork you can touch.
 
@@ -13,6 +15,21 @@ npm run fetch-assets   # posters, artist photos and cafe images from omic.spot (
 npm run dev            # http://localhost:5173
 npm run build          # production build in /dist
 ```
+
+## Deploy (GitHub Pages)
+
+Every push to `main` builds the site and publishes it automatically
+(`.github/workflows/deploy.yml`). Watch progress in the repo's **Actions** tab; it takes about a minute.
+Settings → Pages → Source must stay on **GitHub Actions**.
+
+- The site lives in a sub-folder (`/omic-website/`). The workflow sets `BASE_PATH=/omic-website/` for the build.
+- Paths in HTML (`href="/..."`, `src="/..."`, `url(/...)`) are fixed automatically at build time by the
+  small plugin in `vite.config.js`. Write them as normal root paths.
+- Paths written **in JavaScript** (new images, new page links) must go through the helper:
+  `import { url } from './data.js'` → `url('/assets/new.jpg')`.
+- Moving to a custom domain or Cloudflare Pages? Build without `BASE_PATH` (just `npm run build`)
+  and the site works from the root.
+- Test the sub-folder build locally: `BASE_PATH=/omic-website/ npm run build && npx vite preview --base /omic-website/`.
 
 ## New in v3
 
@@ -66,7 +83,9 @@ src/js/world/world.js       persistent WebGL world: drops + living images
 src/js/world/layouts.js     where the drops go in each section
 src/js/core.js              Lenis + GSAP setup, page lifecycle, hours, reveals, header/footer, forms
 src/js/home.js / page.js    page scenes
-src/js/data.js              events and menu — edit to update the programme
+src/js/data.js              events and menu — edit to update the programme; url() path helper
+vite.config.js              pages list + base-path fixer for GitHub Pages
+.github/workflows/deploy.yml  build + publish to GitHub Pages on every push to main
 src/css/style.css           design system (v2 hours at the bottom)
 public/fonts/               Oswald, Outfit, Instrument Serif (self-hosted)
 ```
