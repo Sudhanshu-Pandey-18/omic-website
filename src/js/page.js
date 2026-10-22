@@ -77,7 +77,10 @@ function floatPoster() {
 }
 
 function seats() {
-  $$('[data-seats]').forEach((el) => { el.innerHTML = Array.from({ length: 50 }, (_, i) => `<i style="--i:${i}"></i>`).join(''); });
+  $$('[data-seats]').forEach((el) => {
+    const n = Number(el.dataset.seats) || 50;
+    el.innerHTML = Array.from({ length: n }, (_, i) => `<i style="--i:${i}"></i>`).join('');
+  });
 }
 
 function cafeInk() {

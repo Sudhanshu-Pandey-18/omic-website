@@ -17,6 +17,9 @@ get /posters/newton.jpg                          "$OUT/posters/newton.jpg"
 get /posters/omic-art-contest-shared-ground.jpg  "$OUT/posters/art-prize.jpg"
 get /poster.jpg                                  "$OUT/posters/nothing-unusual.jpg"
 get /posters/panel-discussion-afterimage.jpg     "$OUT/posters/afterimage.jpg"
+get /posters/linocut-workshop.jpg                "$OUT/posters/linocut-workshop.jpg"
+get /posters/unspoken-workshop.jpg               "$OUT/posters/unspoken-workshop.jpg"
+get /posters/living-room.jpg                     "$OUT/posters/living-room.jpg"
 
 echo "Venue"
 get /cafe-teaser.jpg "$OUT/img/cafe-interior.jpg"
@@ -30,7 +33,9 @@ for p in manish-mundra amit-masurkar pankaj-tripathi rashmi-devi-sawhney \
          patricia-millns jalal-luqman khalil-abdulwahid robin-corcos \
          nujoom-alghanem ali-ettehad curro-gomez elizaveta-pugacheva elham-shafaei \
          gonzalo-rodriguez-gomez maryam-lamei richa-nirwan solimar-miller talal-altukhaes tamer-karam \
-         hind-mezaina valentina-della-rocca mohammad-ali-famori beatriz-minguez-de-molina; do
+         hind-mezaina valentina-della-rocca mohammad-ali-famori beatriz-minguez-de-molina \
+         sami-alkour cristina-gabriela daria-avdeeva mrs-helichrysum tanvi-patel \
+         seungeun-cho rollie-mukherjee nika-sagamonyants tamara-vasilenko; do
   get "/artists/$p.jpg" "$OUT/artists/$p.jpg"
 done
 

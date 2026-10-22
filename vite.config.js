@@ -40,7 +40,7 @@ export default defineConfig({
         newton: page('events/newton.html'),
         artPrize: page('events/art-prize.html'),
         nothingUnusual: page('events/nothing-unusual.html'),
-        afterimage: page('events/afterimage.html'),
+        afterimage: page('events/afterimage.html'), linocut: page('events/linocut-workshop.html'), unspoken: page('events/unspoken-workshop.html'), livingRoom: page('events/living-room.html'),
         notFound: page('404.html'),
       },
     },

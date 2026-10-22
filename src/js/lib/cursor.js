@@ -19,11 +19,12 @@ export function brushCursor() {
   const label = c.querySelector('.cursor-ring span');
 
   let dpr = 1, W = 0, H = 0;
-  const size = () => { dpr = Math.min(devicePixelRatio || 1, 2); W = trail.width = innerWidth * dpr; H = trail.height = innerHeight * dpr; };
+  // the trail is soft watercolour, so 1x resolution looks the same and costs a quarter on Retina
+  const size = () => { dpr = 1; W = trail.width = innerWidth; H = trail.height = innerHeight; };
   size(); addEventListener('resize', size);
 
   const pts = [];
-  let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y, moved = false, muted = false;
+  let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y, moved = false, muted = false, ink = 0, shown = true;
   addEventListener('pointermove', (e) => {
     x = e.clientX; y = e.clientY; moved = true; c.classList.remove('is-hidden');
     if (!muted) pts.push({ x, y, t: performance.now() });
@@ -46,11 +47,20 @@ export function brushCursor() {
   const loop = () => {
     cx += (x - cx) * 0.25; cy += (y - cy) * 0.25;
     c.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-    // fade the previous frame
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillStyle = 'rgba(0,0,0,0.09)';
-    ctx.fillRect(0, 0, W, H);
-    ctx.globalCompositeOperation = 'source-over';
+    // fade the previous frame, but only while there is still ink on the canvas
+    // an empty blend layer still costs a re-blend on every scroll frame, so hide it while it's empty
+    const show = ink > 0;
+    if (show !== shown) { trail.style.visibility = show ? 'visible' : 'hidden'; shown = show; }
+    if (ink > 0) {
+      ink--;
+      if (ink === 0) ctx.clearRect(0, 0, W, H);
+      else {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0,0,0,0.09)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'source-over';
+      }
+    }
     const now = performance.now();
     while (pts.length && now - pts[0].t > 260) pts.shift();
     if (pts.length > 2 && moved) {
@@ -62,6 +72,7 @@ export function brushCursor() {
         ctx.beginPath(); ctx.moveTo(a.x * dpr, a.y * dpr); ctx.lineTo(b.x * dpr, b.y * dpr); ctx.stroke();
       }
       pts.splice(0, pts.length - 2);
+      ink = 70; // frames until the stroke has fully faded
     }
     requestAnimationFrame(loop);
   };

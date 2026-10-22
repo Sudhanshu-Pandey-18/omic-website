@@ -87,8 +87,9 @@ export class Corridor {
     this.host = host; this.items = items; this.onHover = onHover;
     this.progress = 0; this.mouse = new THREE.Vector2(0, 0); this.hovered = null;
     const mobile = innerWidth < 720;
-    this.renderer = new THREE.WebGLRenderer({ antialias: !mobile, alpha: false, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.5 : 1.75));
+    // post-processing renders into its own targets, so canvas MSAA would be wasted work
+    this.renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false, powerPreference: 'high-performance' });
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio, 1.25));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.0;
@@ -124,8 +125,13 @@ export class Corridor {
     }
     scene.add(new THREE.AmbientLight(0xffffff, 0.2));
     const hemi = new THREE.HemisphereLight(0x8193e6, 0x2a1a0c, 0.45); scene.add(hemi);
-    // warm work-lights along the ceiling so the room reads as a space
-    for (let z = -2; z > -LEN; z -= 11) { const pl = new THREE.PointLight(0xffc98a, 6, 9, 1.4); pl.position.set(0, H - 0.6, z); scene.add(pl); }
+    // warm work-lights along the ceiling. Performance: instead of one live light per fixture (every
+    // light costs per pixel), a pool of 3 lights follows the camera and sits in the 3 nearest fixtures.
+    this.ceilZ = [];
+    for (let z = -2; z > -LEN; z -= 11) this.ceilZ.push(z);
+    this.ceilPool = [0, 1, 2].map(() => { const pl = new THREE.PointLight(0xffc98a, 0, 9, 1.4); pl.position.set(0, H - 0.6, 0); scene.add(pl); return pl; });
+    // the same idea for the poster spotlights: 3 live spots serve the 3 nearest frames
+    this.spotPool = [0, 1, 2].map(() => { const sp = new THREE.SpotLight(0xffe7c4, 0, 10, 0.55, 0.65, 1.5); scene.add(sp); scene.add(sp.target); return sp; });
 
     // posters
     this.frames = [];
@@ -140,21 +146,19 @@ export class Corridor {
       const mat = new THREE.Mesh(new THREE.PlaneGeometry(pw + 0.16, ph + 0.16), new THREE.MeshStandardMaterial({ color: CREAM, roughness: 0.9 }));
       mat.position.z = 0.045;
       const tex = loader.load(it.img); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
-      const pic = new THREE.Mesh(new THREE.PlaneGeometry(pw, ph), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.55, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: 0.05 }));
+      const pic = new THREE.Mesh(new THREE.PlaneGeometry(pw, ph), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.55, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: 0.1 }));
       pic.position.z = 0.05;
       group.add(frameMesh, mat, pic);
       group.userData = { item: it, pic, base: group.position.clone(), side, lift: 0 };
       scene.add(group);
 
-      // the spotlight that paints it
-      const spot = new THREE.SpotLight(0xffe7c4, 45, 10, 0.55, 0.65, 1.5);
-      spot.position.set(side * (W / 2 - 1.9), H - 0.2, z);
-      spot.target = group; scene.add(spot); scene.add(spot.target);
+      // where its spotlight hangs (a light from the pool moves here when the frame is near)
+      const spotPos = new THREE.Vector3(side * (W / 2 - 1.9), H - 0.2, z);
       const cone = beam(0xffe9c8, 3.6, 1.05);
-      cone.position.copy(spot.position);
-      cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), group.position.clone().sub(spot.position).normalize());
+      cone.position.copy(spotPos);
+      cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), group.position.clone().sub(spotPos).normalize());
       scene.add(cone);
-      group.userData.spot = spot; group.userData.cone = cone;
+      group.userData.spotPos = spotPos; group.userData.cone = cone;
       this.frames.push(group);
 
       // reflection ghost under the floor
@@ -179,6 +183,8 @@ export class Corridor {
       ['50 SEATS', 'German sound technology.', 'Honest materials, open acoustics.'],
       ['AED 15,000', 'The OMIC Art Prize.', 'Theme: Shared Ground.'],
       ['12 ARTISTS', 'Nothing Unusual.', 'Curated by Narges Soleimanzadeh.'],
+      ['15 PLACES', 'Hands-on workshops.', 'Croissant and coffee included.'],
+      ['LOOK CLOSER', 'Living Room.', 'Eight artists, the everyday.'],
     ];
     words.slice(0, items.length).forEach((wd, i) => vinyl(wd, i % 2 ? -1 : 1, -12.5 - i * 14));
 
@@ -231,7 +237,7 @@ export class Corridor {
     this.resize();
     this.t0 = performance.now();
     this.visible = true;
-    this.io = new IntersectionObserver(([en]) => { this.visible = en.isIntersecting; if (this.visible) this._loop(); }, { rootMargin: '100px' });
+    this.io = new IntersectionObserver(([en]) => { this.visible = en.isIntersecting; if (this.visible) this._loop(); }, { rootMargin: '0px' });
     this.io.observe(host);
   }
 
@@ -315,7 +321,6 @@ export class Corridor {
       u.lift += (target - u.lift) * 0.1;
       g.position.x = u.base.x - u.side * u.lift * 0.35;
       g.rotation.z = Math.sin(t * 0.8 + i) * 0.004 + u.lift * 0.02 * u.side;
-      u.spot.intensity = 45 + u.lift * 45;
       u.cone.material.uniforms.uStrength.value = 0.2 + u.lift * 0.25 + Math.sin(t * 2 + i) * 0.01;
       // caption follows its frame
       v.copy(g.position); v.y -= 1.55; v.project(cam);
@@ -326,7 +331,26 @@ export class Corridor {
       cap.style.opacity = vis.toFixed(3);
       cap.style.pointerEvents = vis > 0.4 ? 'auto' : 'none';
     });
+    this._lights(cam.position.z);
     this.film.uniforms.uTime.value = t;
     this.composer.render();
+  }
+
+  /** move the light pools to the fixtures nearest the camera; far lights fade in so nothing pops */
+  _lights(camZ) {
+    const fade = (z) => Math.max(0, Math.min(1, (40 - Math.abs(camZ - z)) / 14));
+    const k = Math.max(0, this.frames.findIndex((g) => g.position.z < camZ + 2));
+    this.spotPool.forEach((sp) => { sp.intensity = 0; });
+    for (let i = k; i < k + 3 && i < this.frames.length; i++) {
+      const g = this.frames[i], sp = this.spotPool[i % 3];
+      sp.position.copy(g.userData.spotPos); sp.target.position.copy(g.position); sp.target.updateMatrixWorld();
+      sp.intensity = (45 + g.userData.lift * 45) * fade(g.position.z);
+    }
+    const j0 = Math.max(0, this.ceilZ.findIndex((z) => z < camZ + 4));
+    this.ceilPool.forEach((pl) => { pl.intensity = 0; });
+    for (let j = j0; j < j0 + 3 && j < this.ceilZ.length; j++) {
+      const pl = this.ceilPool[j % 3];
+      pl.position.z = this.ceilZ[j]; pl.intensity = 6 * fade(this.ceilZ[j]);
+    }
   }
 }

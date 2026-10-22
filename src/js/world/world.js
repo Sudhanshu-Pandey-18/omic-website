@@ -153,8 +153,9 @@ export class World {
     this.canvas.setAttribute('aria-hidden', 'true');
     document.body.appendChild(this.canvas);
     this.mobile = innerWidth < 720;
-    const r = this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, alpha: true, antialias: true, premultipliedAlpha: true, powerPreference: 'high-performance' });
-    r.setPixelRatio(Math.min(devicePixelRatio, this.mobile ? 1.5 : 1.75));
+    // a full-screen transparent layer: keep its pixel count modest (Retina laptops are 2x)
+    const r = this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, alpha: true, antialias: devicePixelRatio < 1.5, premultipliedAlpha: true, powerPreference: 'high-performance' });
+    r.setPixelRatio(Math.min(devicePixelRatio, 1.5));
     r.outputColorSpace = THREE.SRGBColorSpace;
     r.toneMapping = THREE.ACESFilmicToneMapping;
     r.toneMappingExposure = 0.95;
@@ -176,7 +177,7 @@ export class World {
     this.media = [];
 
     // the drops: 4 letters + 6 small companions that only appear in the footer
-    this.sphere = new THREE.SphereGeometry(1, 96, 64);
+    this.sphere = new THREE.SphereGeometry(1, 64, 48);
     this.drops = [];
     const palette = [COLORS.ink, COLORS.ink, COLORS.ink, COLORS.blue, COLORS.lavender, COLORS.orange, COLORS.blue, COLORS.orange, COLORS.lavender, COLORS.green];
     for (let i = 0; i < 10; i++) {
@@ -364,6 +365,10 @@ export class World {
     this._sync();
     this.media.forEach((m) => m.update(dt, this.vel, this.time));
     const r = this.renderer;
+    // nothing on screen? clear once and then skip drawing until something appears
+    const busy = this.drops.some((d) => d.mesh.visible) || this.media.some((m) => m.mesh.visible);
+    if (!busy) { if (this._drawn) { r.clear(); this._drawn = false; } return; }
+    this._drawn = true;
     r.clear();
     if (this.media.length) r.render(this.mediaScene, this.ortho);
     r.clearDepth();

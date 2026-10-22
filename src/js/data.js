@@ -11,22 +11,75 @@ export const VENUE = {
   line2: 'Goshi Warehouse City',
   line3: 'Al Quoz, Dubai',
   maps: 'https://maps.app.goo.gl/UWvTuSzfT7zGVK7BA?g_st=ic',
+  phone: '+971 4 398 3354',
+  phoneHref: 'tel:+97143983354',
+  whatsapp: '+971 56 185 7647',
+  whatsappHref: 'https://wa.me/971561857647',
+  email: 'gallery@omic.spot',
 };
 
 export const EVENTS = [
   {
+    id: 'linocut-workshop',
+    title: 'Linocut Workshop',
+    kicker: 'Printmaking workshop',
+    pillar: 'workshop',
+    tags: ['Workshop', 'Printmaking', 'Beginner friendly'],
+    blurb: 'Learn linocut printing in two hours with artist Elizaveta Pugacheva: carve your own block and pull several prints.',
+    start: '2026-10-23T14:00:00+04:00',
+    end: '2026-10-23T16:00:00+04:00',
+    when: 'Fri 23 Oct · 2:00 PM',
+    href: url('/events/linocut-workshop.html'),
+    poster: url('/assets/posters/linocut-workshop.jpg'),
+    ratio: '3013/1966',
+    price: 'AED 400',
+    seats: 15,
+    host: 'Elizaveta Pugacheva',
+  },
+  {
+    id: 'unspoken-workshop',
+    title: 'UNSPOKEN: Reimagining the Portrait',
+    kicker: 'Acrylic portrait workshop',
+    pillar: 'workshop',
+    tags: ['Workshop', 'Acrylic', 'Portraiture'],
+    blurb: 'A contemporary acrylic workshop with Sami Alkour, treating the portrait as mood and presence. Take home your own canvas.',
+    start: '2026-10-24T11:00:00+04:00',
+    end: '2026-10-24T13:00:00+04:00',
+    when: 'Sat 24 Oct · 11:00 AM',
+    href: url('/events/unspoken-workshop.html'),
+    poster: url('/assets/posters/unspoken-workshop.jpg'),
+    ratio: '2400/1566',
+    price: 'AED 285',
+    seats: 15,
+    host: 'Sami Alkour',
+  },
+  {
     id: 'art-prize',
     title: 'OMIC Art Prize 2026',
-    kicker: 'Open call',
+    kicker: 'Open call · closed',
     pillar: 'culture',
     tags: ['Open call', 'Painting', 'Sculpture', 'Installation'],
-    blurb: 'Open call for UAE-based artists on this year’s theme, “Shared Ground.”',
+    blurb: 'Submissions for this year’s theme, “Shared Ground,” are closed. The jury is now reviewing the entries.',
     start: '2026-09-24T00:00:00+04:00',
     end: '2026-10-20T23:59:00+04:00',
-    when: 'Submissions close 20 Oct 2026',
+    when: 'Submissions closed 20 Oct',
     href: url('/events/art-prize.html'),
     poster: url('/assets/posters/art-prize.jpg'),
     ratio: '2000/1325',
+  },
+  {
+    id: 'living-room',
+    title: 'Living Room',
+    kicker: 'Group exhibition',
+    pillar: 'culture',
+    tags: ['Exhibition', 'Group show', '8 artists'],
+    blurb: 'A group exhibition curated by Narges Soleimanzadeh that turns the artist’s gaze to what is closest: the everyday.',
+    start: '2026-10-09T17:00:00+04:00',
+    end: '2026-10-19T23:59:00+04:00',
+    when: '9 – 19 Oct',
+    href: url('/events/living-room.html'),
+    poster: url('/assets/posters/living-room.jpg'),
+    ratio: '954/1192',
   },
   {
     id: 'newton',
@@ -37,11 +90,10 @@ export const EVENTS = [
     blurb: 'The award-winning Hindi political satire, followed by a Q&A with director Amit V. Masurkar, actor Pankaj Tripathi and producer Manish Mundra.',
     start: '2026-10-10T18:00:00+04:00',
     end: '2026-10-10T21:00:00+04:00',
-    when: 'Sat 10 Oct · 6:00 PM',
+    when: 'Sat 10 Oct',
     href: url('/events/newton.html'),
     poster: url('/assets/posters/newton.jpg'),
     ratio: '1000/1250',
-    full: true,
   },
   {
     id: 'nothing-unusual',
@@ -66,14 +118,14 @@ export const EVENTS = [
     blurb: 'A screening and panel discussion exploring video art in the UAE, moderated by Valentina della Rocca.',
     start: '2026-09-26T17:00:00+04:00',
     end: '2026-09-26T19:00:00+04:00',
-    when: 'Sat 26 Sep · 5:00–7:00 PM',
+    when: 'Sat 26 Sep',
     href: url('/events/afterimage.html'),
     poster: url('/assets/posters/afterimage.jpg'),
     ratio: '2160/2700',
   },
 ];
 
-/** live | upcoming | open | completed — computed against "now". */
+/** live | upcoming | open | completed — computed against "now". Dates are UAE time. */
 export function statusOf(ev, now = new Date()) {
   const s = new Date(ev.start), e = new Date(ev.end);
   if (now > e) return 'completed';
@@ -88,6 +140,11 @@ export const STATUS_LABEL = {
   open: 'Open call',
   completed: 'Completed',
 };
+
+/** what's happening now or next, soonest first (used by the header, hero and footer) */
+export function currentEvents(now = new Date()) {
+  return EVENTS.filter((e) => statusOf(e, now) !== 'completed').sort((a, b) => new Date(a.start) - new Date(b.start));
+}
 
 export const MENU = [
   { name: 'Cappuccino', group: 'Coffee', img: url('/assets/menu/menu-01.jpg') },

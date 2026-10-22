@@ -16,6 +16,20 @@ npm run dev            # http://localhost:5173
 npm run build          # production build in /dist
 ```
 
+## Content update — 22 Oct 2026 (synced with omic.spot)
+
+- **New events:** Linocut Workshop (Fri 23 Oct, AED 400), UNSPOKEN: Reimagining the Portrait (Sat 24 Oct,
+  AED 285) and the Living Room group exhibition (9–19 Oct, 8 artists), each with its own page.
+- **Workshops** are a new category: a "Workshops" filter on the programme and a "Make something" section on
+  the home page. Cards hide themselves automatically once a workshop has taken place.
+- **Past events** now read as archive: the Art Prize shows "Submissions closed" (no countdown or form),
+  Newton "This screening has taken place", Nothing Unusual and Living Room "This exhibition has closed".
+- **Contact details** (from omic.spot) in the footer, menu, Visit page and every event page:
+  +971 4 398 3354 · WhatsApp +971 56 185 7647 · gallery@omic.spot.
+- The hero's "Next at OMIC" card, the header pill, the ticker and the footer pick the next events from
+  `src/js/data.js` by date, so they stay current on their own.
+- After pulling, run `npm run fetch-assets` once to download the new posters and artist photos.
+
 ## Deploy (GitHub Pages)
 
 Every push to `main` builds the site and publishes it automatically
@@ -57,9 +71,10 @@ Settings → Pages → Source must stay on **GitHub Actions**.
 | 2 | **Manifesto** | twilight | Words fly in from everywhere and settle into the sentence; a curator's pencil circles *cinema*, boxes *theatre*, underlines *art*. |
 | 3 | **The warehouse (3D)** | night | Three.js walk through a dark gallery corridor: every event poster under its own spotlight with dust in the beams, wall lettering, a neon OMIC sign at the end. Hover lifts a frame, click enters. |
 | 4 | **Bring a torch** | night | Three rooms (Culture, Cinema, Cafe) in the dark; your cursor is the torch that reveals what's inside. |
-| 5 | **Cinema** | night | Letterbox bars close in, projector beam, flickering screen with gate weave, rolling credits, a sweeping film-leader date, and a 50-seat theatre that fills up — house full. |
+| 5 | **Cinema** | night | Letterbox bars close in, projector beam, flickering screen with gate weave, rolling credits, a sweeping film-leader date, and a 50-seat theatre that fills up. Shows the last screening (Newton) until the next one is announced. |
 | 6 | **Intermission** | ember | A latte you can stir (same fluid engine, in a cup); the heart heals. Menu rail. |
-| 7 | **Shared Ground** | dawn | A generative painting for the Art Prize: hundreds of strokes from everywhere settle into one ground as you scroll. Click to paint a new one. Flip-clock countdown, AED 15,000, brush-revealed jury. |
+| 6b | **Make something** | ember | Workshop cards (Linocut, UNSPOKEN) with date, price, places and a link to reserve. Past workshops disappear on their own. |
+| 7 | **Shared Ground** | dawn | A generative painting for the Art Prize: hundreds of strokes from everywhere settle into one ground as you scroll. Click to paint a new one. AED 15,000, "submissions closed" status, brush-revealed jury. |
 | 8 | **Founder** | day | Brush-stroke portrait reveal, hand-drawn annotations. |
 | 9 | **Visit + footer** | night | Map, live time in Al Quoz, and the footer's physics circles you can drop and throw. |
 
@@ -83,7 +98,7 @@ src/js/world/world.js       persistent WebGL world: drops + living images
 src/js/world/layouts.js     where the drops go in each section
 src/js/core.js              Lenis + GSAP setup, page lifecycle, hours, reveals, header/footer, forms
 src/js/home.js / page.js    page scenes
-src/js/data.js              events and menu — edit to update the programme; url() path helper
+src/js/data.js              events, contact details and menu — edit to update the programme; url() path helper
 vite.config.js              pages list + base-path fixer for GitHub Pages
 .github/workflows/deploy.yml  build + publish to GitHub Pages on every push to main
 src/css/style.css           design system (v2 hours at the bottom)
@@ -99,10 +114,11 @@ public/fonts/               Oswald, Outfit, Instrument Serif (self-hosted)
 
 ## Forms
 
-Demo mode (validate + thank-you, nothing sent). Set `FORM_ENDPOINT` in `src/js/core.js` to OMIC's
+Demo mode (validate + thank-you, nothing sent). This includes the workshop registration forms, so until
+an endpoint is set, sign-ups must come through phone, WhatsApp or email. Set `FORM_ENDPOINT` in `src/js/core.js` to OMIC's
 Google Apps Script URL to go live.
 
 ## Still needed from OMIC
 
-Opening hours, contact email/phone, Instagram handle, cafe prices, photos of the theatre and gallery,
-and confirmation of the combo names/times and of the "Afterimage" exhibition naming.
+Opening hours, Instagram handle, cafe prices, photos of the theatre and gallery, a form endpoint for
+workshop registrations (forms are still in demo mode), and confirmation of the combo names/times.

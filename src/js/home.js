@@ -5,7 +5,7 @@ import { InkFluid } from './lib/fluid.js';
 import { Corridor } from './lib/corridor.js';
 import { SharedGround } from './lib/shared-ground.js';
 import { InkField } from './ink.js';
-import { EVENTS, MENU, statusOf, url } from './data.js';
+import { EVENTS, MENU, statusOf, url, currentEvents } from './data.js';
 import { trailerModal } from './trailer.js';
 import { map } from './map.js';
 
@@ -13,12 +13,14 @@ const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 
 export function mountHome() {
   hero();
+  nextUp();
   ticker();
   manifesto();
   corridor();
   rooms();
   cinema();
   latte();
+  workshops();
   ground();
   founder();
   menuRail();
@@ -97,11 +99,39 @@ function hero() {
   }
 }
 
+/* ================================================================ hero: what's next */
+function nextUp() {
+  const card = $('[data-next-card]');
+  if (!card) return;
+  const ev = currentEvents()[0];
+  if (!ev) { card.href = url('/programme.html'); $('small', card).textContent = 'At OMIC'; $('strong', card).textContent = 'See the programme'; return; }
+  const s = statusOf(ev);
+  card.href = ev.href;
+  $('img', card).src = ev.poster;
+  $('small', card).textContent = s === 'live' ? 'On now at OMIC' : s === 'open' ? 'Open call' : 'Next at OMIC';
+  $('strong', card).textContent = `${ev.title.split(':')[0]} · ${ev.when.split(' · ')[0]}`;
+}
+
+/* ================================================================ workshops: hide the ones that are over */
+function workshops() {
+  const sec = $('[data-workshops]');
+  if (!sec) return;
+  const cards = $$('.ws-card', sec);
+  cards.forEach((c) => {
+    const ev = EVENTS.find((e) => e.id === c.dataset.ev);
+    if (ev && statusOf(ev) === 'completed') c.remove();
+  });
+  if (!$('.ws-card', sec)) { sec.remove(); return; }
+  if (world) world.layout(sec, dive());
+}
+
 /* ================================================================ marquee */
 function ticker() {
   const track = $('[data-ticker]');
   if (!track) return;
-  const items = EVENTS.map((e) => {
+  const now = currentEvents();
+  const list = [...now, ...EVENTS.filter((e) => !now.includes(e)).slice(0, now.length ? 3 : 5)];
+  const items = list.map((e) => {
     const s = statusOf(e);
     const tag = e.full && s === 'upcoming' ? '<span class="tag full">House full</span>'
       : s === 'live' ? '<span class="tag live">On now</span>'

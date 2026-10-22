@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import Lenis from 'lenis';
-import { EVENTS, statusOf, STATUS_LABEL, VENUE, url } from './data.js';
+import { EVENTS, statusOf, STATUS_LABEL, VENUE, url, currentEvents } from './data.js';
 import { InkField } from './ink.js';
 import { brushCursor } from './lib/cursor.js';
 import { filmLeader } from './lib/leader.js';
@@ -35,7 +35,8 @@ export let world = null;
 /* ================================================================== smooth scroll */
 function smooth() {
   if (reduced) return;
-  lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, touchMultiplier: 1.4 });
+  // lerp: how quickly the page catches up with your fingers (higher = more direct)
+  lenis = new Lenis({ lerp: 0.14, wheelMultiplier: 1, touchMultiplier: 1.4 });
   window.__lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -88,7 +89,7 @@ function buildHeader() {
   panel.className = 'menu-panel';
   panel.id = 'menu-panel';
   panel.innerHTML = `<ul>${NAV.map((n, i) => `<li><a href="${n.href}"><span>${n.label}</span><small>0${i + 1}</small></a></li>`).join('')}</ul>
-    <div class="menu-foot"><span>${VENUE.line1}, ${VENUE.line2}</span><span>Al Quoz, Dubai</span></div>`;
+    <div class="menu-foot"><span>${VENUE.line1}, ${VENUE.line2}, Al Quoz, Dubai</span><span><a href="${VENUE.phoneHref}">${VENUE.phone}</a> · <a href="mailto:${VENUE.email}">${VENUE.email}</a></span></div>`;
   header.after(panel);
 
   const btn = $('.menu-btn', header);
@@ -146,8 +147,13 @@ function buildFooter() {
           </form>
         </div>
         <div><h5>Explore</h5><ul>${NAV.map((n) => `<li><a href="${n.href}">${n.label}</a></li>`).join('')}</ul></div>
-        <div><h5>Now</h5><ul>${EVENTS.map((e) => `<li><a href="${e.href}">${e.title}</a></li>`).join('')}</ul></div>
+        <div><h5>Now</h5><ul>${currentEvents().map((e) => `<li><a href="${e.href}">${e.title}</a></li>`).join('')}<li><a href="${url('/programme.html')}">Full programme &amp; archive</a></li></ul></div>
         <div><h5>Find us</h5><address style="font-style:normal;opacity:.85">${VENUE.line1}<br>${VENUE.line2}<br>${VENUE.line3}</address>
+          <ul class="contact-list">
+            <li><a href="${VENUE.phoneHref}">${VENUE.phone}</a></li>
+            <li><a href="${VENUE.whatsappHref}" target="_blank" rel="noopener">WhatsApp ${VENUE.whatsapp}</a></li>
+            <li><a href="mailto:${VENUE.email}">${VENUE.email}</a></li>
+          </ul>
           <p style="margin-top:12px"><a href="${VENUE.maps}" target="_blank" rel="noopener" class="u-link">Get directions ↗</a></p>
           <p class="dubai-clock" data-clock></p></div>
       </div>
@@ -353,7 +359,7 @@ function formsIn(root) {
       let ok = true;
       $$('[required]', form).forEach((inp) => {
         const field = inp.closest('.field');
-        const bad = inp.type === 'checkbox' ? !inp.checked : inp.type === 'file' ? !inp.files.length : !inp.value.trim() || (inp.type === 'email' && !/^\S+@\S+\.\S+$/.test(inp.value));
+        const bad = inp.type === 'checkbox' ? !inp.checked : inp.type === 'file' ? !inp.files.length : !inp.value.trim() || (inp.type === 'email' && !/^\S+@\S+\.\S+$/.test(inp.value)) || (inp.pattern && !new RegExp(`^(?:${inp.pattern})$`).test(inp.value.trim()));
         if (field) field.classList.toggle('is-error', bad);
         if (bad) ok = false;
       });
